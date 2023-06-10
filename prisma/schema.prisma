@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// criando migrations
+model User {
+  id         String    @id @default(uuid())
+  name       String
+  password   String
+  role       String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  deleted_at DateTime? @default(now())
+
+  @@map("users")
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  name       String
+  image      String?
+  products   Product[]
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  deleted_at DateTime? @default(now())
+
+  @@map("categories")
+}
+
+model Product {
+  id            String        @id @default(uuid())
+  name          String
+  cod_barras    String
+  price         Float
+  category      Category      @relation(fields: [category_id], references: [id])
+  category_id   String
+  stock_product StockProduct?
+  sales         Sale[]
+  validity      validity[]
+  created_at    DateTime?     @default(now())
+  updated_at    DateTime?     @default(now())
+  deleted_at    DateTime?     @default(now())
+
+  @@map("products")
+}
+
+model StockProduct {
+  id         String    @id @default(uuid())
+  product    Product   @relation(fields: [product_id], references: [id])
+  product_id String    @unique
+  amount     Int
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  deleted_at DateTime? @default(now())
+
+  @@map("stock_products")
+}
+
+model Sale {
+  id         String    @id @default(uuid())
+  product    Product   @relation(fields: [product_id], references: [id])
+  product_id String
+  amount     Int
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  deleted_at DateTime? @default(now())
+
+  @@map("sales")
+}
+
+model validity {
+  id            String    @id @default(uuid())
+  product       Product   @relation(fields: [product_id], references: [id])
+  product_id    String
+  amount        Int
+  validity_date DateTime
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @default(now())
+  deleted_at    DateTime? @default(now())
+
+  @@map("validities")
+}
