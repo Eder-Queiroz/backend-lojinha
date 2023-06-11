@@ -24,5 +24,21 @@ export default class CategoryController {
         return res.json(categories);
         
     }
+
+    async updateCategory(req: Request, res: Response) {
+
+        const category_id = req.params.category_id;
+
+        const {name, image} = req.body;
+
+        const categoryService = new CategoryService();
+
+        const category = await categoryService.updateCategory(category_id, {name, image});
+
+        return res.json(category);
+
+    }
+    
+    // TODO implementar o delete de categorias
     
 }

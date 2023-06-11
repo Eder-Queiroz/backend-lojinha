@@ -43,4 +43,28 @@ export default class CategoryService {
 
     }
 
+    async updateCategory(category_id: string, {name, image}:CategoryRequest) {
+
+        const category = await prismaClient.category.update({
+            data: {
+                name,
+                image
+            },
+            where: {
+                id: category_id
+            },
+            select: {
+                id: true,
+                name: true,
+                image: true
+            }
+        });
+
+
+        return category;
+
+    }
+
+    // TODO implementar o delete de categoria
+
 }

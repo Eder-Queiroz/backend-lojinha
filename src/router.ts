@@ -14,5 +14,6 @@ router.get('/me', isAuthenticated, new UserController().getUserById);
 // -- ROUTER CATEGORY --
 router.post('/categories', isAuthenticated, isAuthorized, new CategoryController().createCategory);
 router.get('/categories', isAuthenticated, new CategoryController().readCategories);
+router.put('/categories/:category_id', isAuthenticated, isAuthorized, new CategoryController().updateCategory);
 
 export {router};
