@@ -117,6 +117,11 @@ router.get(
   isAuthenticated,
   new SalesController().readSaleById
 );
+router.get(
+  "/product/sales/:product_id",
+  isAuthenticated,
+  new SalesController().filterSaleOfProduct
+);
 router.put(
   "/sales/:sale_id",
   isAuthenticated,

@@ -58,4 +58,14 @@ export default class SalesController {
 
     return res.json(sale);
   }
+
+  async filterSaleOfProduct(req: Request, res: Response) {
+    const { product_id } = req.params;
+
+    const salesService = new SalesService();
+
+    const sale = await salesService.filterSaleOfProduct(product_id);
+
+    return res.json(sale);
+  }
 }

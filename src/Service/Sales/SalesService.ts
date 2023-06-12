@@ -91,4 +91,22 @@ export default class SalesService {
 
     return sale;
   }
+
+  async filterSaleOfProduct(product_id: string) {
+
+    const sales = await prismaClient.sale.findMany({
+      where: {
+        product_id,
+        isDelete: false
+      },
+      select: {
+        id: true,
+        product_id: true,
+        amount: true,
+      }
+    });
+
+    return sales
+
+  }
 }
