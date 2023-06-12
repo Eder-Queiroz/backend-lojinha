@@ -4,6 +4,7 @@ import isAuthenticated from "./middleware/isAuthenticated";
 import CategoryController from "./controller/CategoryController/CategoryController";
 import isAuthorized from "./middleware/isAuthorized";
 import ProductController from "./controller/ProductController/ProductController";
+import StockProductController from "./controller/StockProductController/StockProductController";
 
 const router = Router();
 
@@ -23,5 +24,12 @@ router.get('/products', isAuthenticated, new ProductController().readProducts);
 router.get('/products/:product_id', isAuthenticated, new ProductController().readProductById);
 router.put('/products/:product_id', isAuthenticated, isAuthorized, new ProductController().updateProduct);
 router.delete('/products/:product_id', isAuthenticated, isAuthorized, new ProductController().deleteProduct);
+
+// -- ROUTER STOCKPRODUCT --
+router.post('/stock-product', isAuthenticated, isAuthorized, new StockProductController().createStockProduct);
+router.get('/stock-product', isAuthenticated, new StockProductController().readStockProducts);
+router.get('/stock-product/:stockProduct_id', isAuthenticated, new StockProductController().readStockProductById);
+router.put('/stock-product/:stockProduct_id', isAuthenticated, isAuthorized,new StockProductController().updateStockProduct);
+router.delete('/stock-product/:stockProduct_id', isAuthenticated, new StockProductController().deleteStockProduct);
 
 export {router};
