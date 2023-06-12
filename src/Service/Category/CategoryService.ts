@@ -87,8 +87,6 @@ export default class CategoryService {
 
     }
 
-    // TODO implementar o delete de categoria
-
     async deleteCategory(category_id: string) {
 
         // deletando produtos

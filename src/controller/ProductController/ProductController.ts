@@ -57,8 +57,6 @@ export default class ProductController {
 
     }
 
-    // TODO fazer ajustes no delete do produto, para deletar junto o estoque
-
     async deleteProduct(req: Request, res: Response) {
 
         const {product_id} = req.params;

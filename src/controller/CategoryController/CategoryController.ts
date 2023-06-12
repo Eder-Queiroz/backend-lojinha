@@ -55,6 +55,16 @@ export default class CategoryController {
 
     }
     
-    // TODO implementar o delete de categorias
+    async deleteCategory(req: Request, res: Response) {
+
+        const {category_id} = req.params;
+
+        const categoryService = new CategoryService();
+
+        const category = await categoryService.deleteCategory(category_id);
+
+        return res.json(category);
+
+    }
     
 }
