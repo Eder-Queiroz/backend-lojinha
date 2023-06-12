@@ -68,4 +68,16 @@ export default class SalesController {
 
     return res.json(sale);
   }
+
+  async filterSalesOfDate(req: Request, res: Response) {
+    const {dateGte, dateLte} = req.body;
+
+    const salesService = new SalesService();
+
+    const sales = await salesService.filterSaleByDate({dateGte, dateLte});
+
+    return res.json(sales);
+
+  }
+
 }

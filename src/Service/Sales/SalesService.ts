@@ -5,6 +5,10 @@ interface SalesRequest {
   amount: number;
 }
 
+interface DateFilter {
+  dateGte: Date;
+  dateLte: Date;
+}
 export default class SalesService {
   async createSale({ product_id, amount }: SalesRequest) {
     if (!product_id) {
@@ -98,6 +102,26 @@ export default class SalesService {
       where: {
         product_id,
         isDelete: false
+      },
+      select: {
+        id: true,
+        product_id: true,
+        amount: true,
+      }
+    });
+
+    return sales
+
+  }
+
+  async filterSaleByDate({dateGte, dateLte}: DateFilter) {
+
+    const sales = await prismaClient.sale.findMany({
+      where: {
+        created_at: {
+          gte: dateGte,
+          lte: dateLte
+        }
       },
       select: {
         id: true,

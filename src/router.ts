@@ -116,7 +116,8 @@ router.get(
   "/sales/:sale_id",
   isAuthenticated,
   new SalesController().readSaleById
-);
+  );
+  router.get('/dates/sales', isAuthorized, new SalesController().filterSalesOfDate);
 router.get(
   "/product/sales/:product_id",
   isAuthenticated,
@@ -134,6 +135,7 @@ router.delete(
   isAuthorized,
   new SalesController().deleteSale
 );
+
 
 // -- ROUTER VALIDITY --
 router.post(
