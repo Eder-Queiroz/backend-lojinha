@@ -68,4 +68,16 @@ export default class ProductController {
 
     }
 
+    async filterProductByCategory(req: Request, res: Response) {
+
+        const {category_id} = req.params;
+
+        const productService = new ProductService();
+
+        const products = await productService.filterProductByCategory(category_id);
+
+        return res.json(products);
+
+    }
+
 }

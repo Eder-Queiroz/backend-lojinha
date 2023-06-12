@@ -52,6 +52,11 @@ router.get(
   isAuthenticated,
   new ProductController().readProductById
 );
+router.get(
+  "/products-category/:category_id",
+  isAuthenticated,
+  new ProductController().filterProductByCategory
+);
 router.put(
   "/products/:product_id",
   isAuthenticated,

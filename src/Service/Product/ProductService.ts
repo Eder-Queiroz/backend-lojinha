@@ -159,4 +159,24 @@ export default class ProductService {
 
     }
 
+    async filterProductByCategory(category_id: string) {
+
+        const products = await prismaClient.product.findMany({
+            where: {
+                category_id,
+                isDelete: false
+            },
+            select: {
+                id: true,
+                name: true,
+                cod_barras: true,
+                category_id: true,
+                price: true
+            }
+        });
+
+        return products;
+
+    }
+
 }
