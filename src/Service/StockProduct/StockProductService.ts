@@ -33,6 +33,9 @@ export default class StockProductService {
     async readStockProducts() {
 
         const stockProducts = await prismaClient.stockProduct.findMany({
+            where: {
+                isDelete: false
+            },
             select: {
                 id: true,
                 product_id: true,
@@ -48,7 +51,8 @@ export default class StockProductService {
 
         const stockProduct = await prismaClient.stockProduct.findFirst({
             where: {
-                id: stockProduct_id
+                id: stockProduct_id,
+                isDelete: false
             },
             select: {
                 id: true,

@@ -7,7 +7,7 @@ interface SalesRequest {
 
 export default class SalesService {
   async createSale({ product_id, amount }: SalesRequest) {
-    if (!product_id || amount < 0) {
+    if (!product_id) {
       throw new Error("Bad sales request!");
     }
 
@@ -29,6 +29,9 @@ export default class SalesService {
 
   async readSales() {
     const sales = await prismaClient.sale.findMany({
+      where: {
+        isDelete: false
+      },
       select: {
         id: true,
         product_id: true,
@@ -43,6 +46,7 @@ export default class SalesService {
     const sale = await prismaClient.sale.findFirst({
       where: {
         id: sale_id,
+        isDelete: false
       },
       select: {
         id: true,
@@ -55,10 +59,6 @@ export default class SalesService {
   }
 
   async updateSale(sale_id: string, { product_id, amount }: SalesRequest) {
-    if (amount < 0) {
-      throw new Error("Bad sales request!");
-    }
-
     const sale = await prismaClient.sale.update({
       data: {
         product_id,

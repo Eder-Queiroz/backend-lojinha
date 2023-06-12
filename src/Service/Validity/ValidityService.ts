@@ -32,6 +32,9 @@ export default class ValidityService {
 
   async readValidities() {
     const validities = await prismaClient.validity.findMany({
+      where: {
+        isDelete: false
+      },
       select: {
         id: true,
         product_id: true,
@@ -47,6 +50,7 @@ export default class ValidityService {
     const validity = await prismaClient.validity.findFirst({
       where: {
         id: validity_id,
+        isDelete: false
       },
       select: {
         id: true,

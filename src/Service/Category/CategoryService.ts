@@ -33,6 +33,9 @@ export default class CategoryService {
     async readCategories() {
 
         const categories = await prismaClient.category.findMany({
+            where: {
+                isDelete: false
+            },
             select: {
                 id: true,
                 name: true,
@@ -48,7 +51,8 @@ export default class CategoryService {
 
         const category = await prismaClient.category.findFirst({
             where: {
-                id: category_id
+                id: category_id,
+                isDelete: false
             },
             select: {
                 id: true,
@@ -84,5 +88,31 @@ export default class CategoryService {
     }
 
     // TODO implementar o delete de categoria
+
+    async deleteCategory(category_id: string) {
+
+        // deletando produtos
+
+        await prismaClient.product.updateMany({
+            data: {
+                isDelete: true
+            },
+            where: {
+                category_id: category_id
+            }
+        })
+
+        // deletando a categoria
+
+        const category = await prismaClient.category.update({
+            data: {
+                isDelete: true
+            },
+            where: {
+                id: category_id
+            }
+        });
+
+    }
 
 }

@@ -50,6 +50,9 @@ export default class ProductService {
     async readProducts() {
 
         const products = await prismaClient.product.findMany({
+            where: {
+                isDelete: false
+            },
             select: {
                 id: true,
                 name: true,
@@ -67,7 +70,8 @@ export default class ProductService {
 
         const product = await prismaClient.product.findFirst({
             where: {
-                id: product_id
+                id: product_id,
+                isDelete: false
             },
             select: {
                 id: true,
@@ -109,7 +113,36 @@ export default class ProductService {
 
     async deleteProduct(product_id: string) {
 
-        const product = await prismaClient.product.delete({
+        // Deletando o estoque do produto
+
+        await prismaClient.stockProduct.update({
+            data: {
+                amount: 0,
+                isDelete: true
+            },
+            where: {
+                product_id: product_id 
+            }
+        });
+
+        // Deletando validades do produto
+
+        await prismaClient.validity.updateMany({
+            data: {
+                amount: 0,
+                isDelete: true
+            },
+            where: {
+                product_id: product_id
+            }
+        });
+
+        // Deletando o produto
+
+        const product = await prismaClient.product.update({
+            data: {
+                isDelete: true
+            },
             where: {
                 id: product_id
             },
