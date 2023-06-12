@@ -6,6 +6,7 @@ import isAuthorized from "./middleware/isAuthorized";
 import ProductController from "./controller/ProductController/ProductController";
 import StockProductController from "./controller/StockProductController/StockProductController";
 import SalesController from "./controller/SalesController/SalesController";
+import ValidityController from "./controller/ValidityController/ValidityController";
 
 const router = Router();
 
@@ -112,6 +113,37 @@ router.delete(
   isAuthenticated,
   isAuthorized,
   new SalesController().deleteSale
+);
+
+// -- ROUTER SALES --
+router.post(
+  "/validity",
+  isAuthenticated,
+  isAuthorized,
+  new ValidityController().createValidity
+);
+
+router.get(
+  "/validity",
+  isAuthenticated,
+  new ValidityController().readValidities
+);
+router.get(
+  "/validity/:validity_id",
+  isAuthenticated,
+  new ValidityController().readValidityById
+);
+router.put(
+  "/validity/:validity_id",
+  isAuthenticated,
+  isAuthorized,
+  new ValidityController().updateValidity
+);
+router.delete(
+  "/validity/:validity_id",
+  isAuthenticated,
+  isAuthorized,
+  new ValidityController().deleteValidity
 );
 
 export { router };
