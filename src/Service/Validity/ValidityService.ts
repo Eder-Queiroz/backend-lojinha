@@ -17,6 +17,7 @@ export default class ValidityService {
         product_id,
         amount,
         validity_date,
+        isDelete: false
       },
       select: {
         id: true,

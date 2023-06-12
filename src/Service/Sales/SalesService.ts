@@ -15,6 +15,7 @@ export default class SalesService {
       data: {
         product_id,
         amount,
+        isDelete: false
       },
       select: {
         id: true,

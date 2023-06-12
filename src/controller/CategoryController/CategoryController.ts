@@ -25,6 +25,22 @@ export default class CategoryController {
         
     }
 
+    async readCategoryById(req: Request, res: Response) {
+
+        const {category_id} = req.params
+
+        const categoryService = new CategoryService();
+
+        const category = await categoryService.readCategoryById(category_id);
+
+        if(!category) {
+            res.status(404).end();
+        }
+
+        return res.json(category);
+        
+    }
+
     async updateCategory(req: Request, res: Response) {
 
         const category_id = req.params.category_id;

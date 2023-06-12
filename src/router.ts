@@ -27,6 +27,11 @@ router.get(
   isAuthenticated,
   new CategoryController().readCategories
 );
+router.get(
+  "/categories/:category_id",
+  isAuthenticated,
+  new CategoryController().readCategoryById
+);
 router.put(
   "/categories/:category_id",
   isAuthenticated,

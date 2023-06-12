@@ -16,7 +16,8 @@ export default class StockProductService {
         const stockProduct = await prismaClient.stockProduct.create({
             data: {
                 product_id,
-                amount
+                amount,
+                isDelete: false
             },
             select: {
                 id: true,

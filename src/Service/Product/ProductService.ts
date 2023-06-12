@@ -31,7 +31,8 @@ export default class ProductService {
                 name,
                 cod_barras,
                 category_id,
-                price
+                price,
+                isDelete: false
             },
             select: {
                 id: true,

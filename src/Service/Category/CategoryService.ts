@@ -16,7 +16,8 @@ export default class CategoryService {
         const category = await prismaClient.category.create({
             data: {
                 name,
-                image
+                image,
+                isDelete: false
             },
             select: {
                 id: true,
@@ -40,6 +41,23 @@ export default class CategoryService {
         })
 
         return categories
+
+    }
+
+    async readCategoryById(category_id: string) {
+
+        const category = await prismaClient.category.findFirst({
+            where: {
+                id: category_id
+            },
+            select: {
+                id: true,
+                name: true,
+                image: true
+            }
+        });
+
+        return category;
 
     }
 
