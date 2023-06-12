@@ -62,4 +62,14 @@ export default class ValidityController {
 
     return res.json(validity);
   }
+
+  async filterValidityOfProduct(req: Request, res: Response) {
+    const { product_id } = req.params;
+
+    const validityService = new ValidityService();
+
+    const validity = await validityService.filterValidityOfProduct(product_id);
+
+    return res.json(validity);
+  }
 }

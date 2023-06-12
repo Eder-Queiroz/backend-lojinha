@@ -92,7 +92,11 @@ export default class ValidityService {
   }
 
   async deleteValidity(validity_id: string) {
-    const validity = await prismaClient.validity.delete({
+    const validity = await prismaClient.validity.update({
+      data: {
+        amount: 0,
+        isDelete: true,
+      },
       where: {
         id: validity_id,
       },
@@ -105,5 +109,24 @@ export default class ValidityService {
     });
 
     return validity;
+  }
+
+  async filterValidityOfProduct(product_id: string) {
+
+    const validity = await prismaClient.validity.findMany({
+      where: {
+        product_id,
+        isDelete: false
+      },
+      select: {
+        id: true,
+        product_id: true,
+        amount: true,
+        validity_date: true,
+      },
+    });
+
+    return validity;
+
   }
 }

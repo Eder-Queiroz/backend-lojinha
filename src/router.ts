@@ -130,7 +130,7 @@ router.delete(
   new SalesController().deleteSale
 );
 
-// -- ROUTER SALES --
+// -- ROUTER VALIDITY --
 router.post(
   "/validity",
   isAuthenticated,
@@ -147,6 +147,11 @@ router.get(
   "/validity/:validity_id",
   isAuthenticated,
   new ValidityController().readValidityById
+);
+router.get(
+  "/product/validity/:product_id",
+  isAuthenticated,
+  new ValidityController().filterValidityOfProduct
 );
 router.put(
   "/validity/:validity_id",
