@@ -33,7 +33,7 @@ export default class StockProductController {
 
         const stockProducts = await stockProductService.readStockProductById(stockProduct_id);
 
-        if(!stockProduct_id) {
+        if(!stockProducts) {
             return res.status(404).end();
         }
 
@@ -64,6 +64,19 @@ export default class StockProductController {
         const stockProducts = await stockProductService.deleteStockProduct(stockProduct_id);
 
         return res.json(stockProducts);
+
+    }
+
+    async filterStockByProductId(req: Request, res: Response) {
+
+        const {product_id} = req.params;
+
+        const stockProductService = new StockProductService();
+
+        const stockProducts = await stockProductService.filterStockByProductId(product_id);
+
+        return res.json(stockProducts);
+
 
     }
 

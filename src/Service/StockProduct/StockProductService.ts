@@ -107,4 +107,22 @@ export default class StockProductService {
 
     }
 
+    async filterStockByProductId(product_id: string) {
+
+        const stockProduct = await prismaClient.stockProduct.findFirst({
+            where: {
+                product_id,
+                isDelete: false
+            },
+            select: {
+                id: true,
+                product_id: true,
+                amount: true
+            }
+        });
+
+        return stockProduct;
+
+    }
+
 }

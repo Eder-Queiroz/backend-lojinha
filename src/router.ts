@@ -87,6 +87,11 @@ router.get(
   isAuthenticated,
   new StockProductController().readStockProductById
 );
+router.get(
+  "/product/stock-product/:product_id",
+  isAuthenticated,
+  new StockProductController().filterStockByProductId
+);
 router.put(
   "/stock-product/:stockProduct_id",
   isAuthenticated,
