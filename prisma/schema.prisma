@@ -93,3 +93,9 @@ model validity {
 
   @@map("validities")
 }
+
+model box {
+  id       String  @id @default(uuid())
+  value    Float
+  isDelete Boolean
+}

@@ -7,6 +7,7 @@ import ProductController from "./controller/ProductController/ProductController"
 import StockProductController from "./controller/StockProductController/StockProductController";
 import SalesController from "./controller/SalesController/SalesController";
 import ValidityController from "./controller/ValidityController/ValidityController";
+import BoxController from "./controller/BoxController/BoxController";
 
 const router = Router();
 
@@ -116,8 +117,12 @@ router.get(
   "/sales/:sale_id",
   isAuthenticated,
   new SalesController().readSaleById
-  );
-  router.get('/dates/sales', isAuthorized, new SalesController().filterSalesOfDate);
+);
+router.get(
+  "/dates/sales",
+  isAuthorized,
+  new SalesController().filterSalesOfDate
+);
 router.get(
   "/product/sales/:product_id",
   isAuthenticated,
@@ -135,7 +140,6 @@ router.delete(
   isAuthorized,
   new SalesController().deleteSale
 );
-
 
 // -- ROUTER VALIDITY --
 router.post(
@@ -171,6 +175,22 @@ router.delete(
   isAuthenticated,
   isAuthorized,
   new ValidityController().deleteValidity
+);
+
+// -- ROUTER BOX --
+router.post("/box", isAuthenticated, isAuthorized, new BoxController().initBox);
+router.get("/box", isAuthenticated, new BoxController().readValueBox);
+router.put(
+  "/box/:box_id",
+  isAuthenticated,
+  isAuthorized,
+  new BoxController().updateValueBox
+);
+router.delete(
+  "/box/:box_id",
+  isAuthenticated,
+  isAuthorized,
+  new BoxController().deleteBox
 );
 
 export { router };
