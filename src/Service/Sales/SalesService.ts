@@ -19,7 +19,7 @@ export default class SalesService {
       data: {
         product_id,
         amount,
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -34,7 +34,7 @@ export default class SalesService {
   async readSales() {
     const sales = await prismaClient.sale.findMany({
       where: {
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -50,7 +50,7 @@ export default class SalesService {
     const sale = await prismaClient.sale.findFirst({
       where: {
         id: sale_id,
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -67,6 +67,7 @@ export default class SalesService {
       data: {
         product_id,
         amount,
+        updated_at: new Date(),
       },
       where: {
         id: sale_id,
@@ -82,7 +83,11 @@ export default class SalesService {
   }
 
   async deleteSale(sale_id: string) {
-    const sale = await prismaClient.sale.delete({
+    const sale = await prismaClient.sale.update({
+      data: {
+        isDelete: true,
+        deleted_at: new Date(),
+      },
       where: {
         id: sale_id,
       },
@@ -97,40 +102,36 @@ export default class SalesService {
   }
 
   async filterSaleOfProduct(product_id: string) {
-
     const sales = await prismaClient.sale.findMany({
       where: {
         product_id,
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
         product_id: true,
         amount: true,
-      }
+      },
     });
 
-    return sales
-
+    return sales;
   }
 
-  async filterSaleByDate({dateGte, dateLte}: DateFilter) {
-
+  async filterSaleByDate({ dateGte, dateLte }: DateFilter) {
     const sales = await prismaClient.sale.findMany({
       where: {
         created_at: {
           gte: dateGte,
-          lte: dateLte
-        }
+          lte: dateLte,
+        },
       },
       select: {
         id: true,
         product_id: true,
         amount: true,
-      }
+      },
     });
 
-    return sales
-
+    return sales;
   }
 }

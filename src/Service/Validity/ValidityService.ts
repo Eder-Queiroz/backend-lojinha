@@ -17,7 +17,7 @@ export default class ValidityService {
         product_id,
         amount,
         validity_date,
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -33,7 +33,7 @@ export default class ValidityService {
   async readValidities() {
     const validities = await prismaClient.validity.findMany({
       where: {
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -50,7 +50,7 @@ export default class ValidityService {
     const validity = await prismaClient.validity.findFirst({
       where: {
         id: validity_id,
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -76,6 +76,7 @@ export default class ValidityService {
         product_id,
         amount,
         validity_date,
+        updated_at: new Date(),
       },
       where: {
         id: validity_id,
@@ -96,6 +97,7 @@ export default class ValidityService {
       data: {
         amount: 0,
         isDelete: true,
+        deleted_at: new Date(),
       },
       where: {
         id: validity_id,
@@ -112,11 +114,10 @@ export default class ValidityService {
   }
 
   async filterValidityOfProduct(product_id: string) {
-
     const validity = await prismaClient.validity.findMany({
       where: {
         product_id,
-        isDelete: false
+        isDelete: false,
       },
       select: {
         id: true,
@@ -127,6 +128,5 @@ export default class ValidityService {
     });
 
     return validity;
-
   }
 }
