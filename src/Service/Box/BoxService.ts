@@ -34,6 +34,7 @@ export default class BoxService {
     const box = await prismaClient.box.update({
       data: {
         value,
+        updated_at: new Date(),
       },
       where: {
         id: box_id,

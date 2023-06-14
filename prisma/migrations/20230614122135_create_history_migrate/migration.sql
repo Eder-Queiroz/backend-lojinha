@@ -79,6 +79,31 @@ CREATE TABLE "validities" (
     CONSTRAINT "validities_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "box" (
+    "id" TEXT NOT NULL,
+    "value" DOUBLE PRECISION NOT NULL,
+    "isDelete" BOOLEAN NOT NULL,
+    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "box_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "histories" (
+    "id" TEXT NOT NULL,
+    "box_id" TEXT NOT NULL,
+    "value" DOUBLE PRECISION NOT NULL,
+    "type" TEXT NOT NULL,
+    "isDelete" BOOLEAN NOT NULL,
+    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "deleted_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "histories_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "stock_products_product_id_key" ON "stock_products"("product_id");
 
@@ -93,3 +118,6 @@ ALTER TABLE "sales" ADD CONSTRAINT "sales_product_id_fkey" FOREIGN KEY ("product
 
 -- AddForeignKey
 ALTER TABLE "validities" ADD CONSTRAINT "validities_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "histories" ADD CONSTRAINT "histories_box_id_fkey" FOREIGN KEY ("box_id") REFERENCES "box"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

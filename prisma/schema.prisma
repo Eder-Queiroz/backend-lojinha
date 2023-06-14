@@ -95,7 +95,24 @@ model validity {
 }
 
 model box {
-  id       String  @id @default(uuid())
-  value    Float
-  isDelete Boolean
+  id         String    @id @default(uuid())
+  value      Float
+  isDelete   Boolean
+  history    history[]
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+}
+
+model history {
+  id         String    @id @default(uuid())
+  box        box       @relation(fields: [box_id], references: [id])
+  box_id     String
+  value      Float
+  type       String
+  isDelete   Boolean
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  deleted_at DateTime?
+
+  @@map("histories")
 }

@@ -8,6 +8,7 @@ import StockProductController from "./controller/StockProductController/StockPro
 import SalesController from "./controller/SalesController/SalesController";
 import ValidityController from "./controller/ValidityController/ValidityController";
 import BoxController from "./controller/BoxController/BoxController";
+import HistoriesController from "./controller/HistoriesController/HistoriesController";
 
 const router = Router();
 
@@ -191,6 +192,46 @@ router.delete(
   isAuthenticated,
   isAuthorized,
   new BoxController().deleteBox
+);
+
+// -- ROUTER HISTORIES --
+router.post(
+  "/histories",
+  isAuthenticated,
+  isAuthorized,
+  new HistoriesController().createHistory
+);
+router.get(
+  "/histories",
+  isAuthenticated,
+  new HistoriesController().readHistory
+);
+router.get(
+  "/histories/:history_id",
+  isAuthenticated,
+  new HistoriesController().readHistoryById
+);
+router.put(
+  "/histories/:history_id",
+  isAuthenticated,
+  isAuthorized,
+  new HistoriesController().updateHistory
+);
+router.delete(
+  "/histories/:history_id",
+  isAuthenticated,
+  isAuthorized,
+  new HistoriesController().deleteHistory
+);
+router.get(
+  "/types/histories",
+  isAuthenticated,
+  new HistoriesController().readHistoryByType
+);
+router.get(
+  "/dates/histories",
+  isAuthenticated,
+  new HistoriesController().readHistoryByDate
 );
 
 export { router };
